@@ -1,0 +1,92 @@
+[
+  {
+    "id": "txn_001",
+    "description": "Lunch at cafeteria",
+    "amount": 3500,
+    "category": "food",
+    "date": "2026-06-19",
+    "createdAt": "2026-06-19T08:00:00.000Z",
+    "updatedAt": "2026-06-19T08:00:00.000Z"
+  },
+  {
+    "id": "txn_002",
+    "description": "Chemistry textbook",
+    "amount": 45000,
+    "category": "fees",
+    "date": "2026-06-18",
+    "createdAt": "2026-06-18T09:00:00.000Z",
+    "updatedAt": "2026-06-18T09:00:00.000Z"
+  },
+  {
+    "id": "txn_003",
+    "description": "Motonari ride to Kigali Heights",
+    "amount": 1500,
+    "category": "transports",
+    "date": "2026-06-19",
+    "createdAt": "2026-06-19T06:30:00.000Z",
+    "updatedAt": "2026-06-19T06:30:00.000Z"
+  },
+  {
+    "id": "txn_004",
+    "description": "Monthly Airtel Internet Bundle",
+    "amount": 10000,
+    "category": "others",
+    "date": "2026-06-15",
+    "createdAt": "2026-06-15T10:15:00.000Z",
+    "updatedAt": "2026-06-15T10:15:00.000Z"
+  },
+  {
+    "id": "txn_005",
+    "description": "Groceries at Simba Supermarket",
+    "amount": 28500,
+    "category": "food",
+    "date": "2026-06-17",
+    "createdAt": "2026-06-17T14:20:00.000Z",
+    "updatedAt": "2026-06-17T14:20:00.000Z"
+  },
+  {
+    "id": "txn_006",
+    "description": "Cinema ticket at Century Cinema",
+    "amount": 5000,
+    "category": "intertainment",
+    "date": "2026-06-13",
+    "createdAt": "2026-06-13T19:00:00.000Z",
+    "updatedAt": "2026-06-13T19:00:00.000Z"
+  },
+  {
+    "id": "txn_007",
+    "description": "Coffee at Question Coffee",
+    "amount": 3000,
+    "category": "food",
+    "date": "2026-06-19",
+    "createdAt": "2026-06-19T09:45:00.000Z",
+    "updatedAt": "2026-06-19T09:45:00.000Z"
+  },
+  {
+    "id": "txn_008",
+    "description": "University Registration Fee",
+    "amount": 60000,
+    "category": "fees",
+    "date": "2026-06-01",
+    "createdAt": "2026-06-01T11:00:00.000Z",
+    "updatedAt": "2026-06-01T11:00:00.000Z"
+  },
+  {
+    "id": "txn_009",
+    "description": "Yego Cab to Airport",
+    "amount": 12000,
+    "category": "transports",
+    "date": "2026-06-14",
+    "createdAt": "2026-06-14T15:30:00.000Z",
+    "updatedAt": "2026-06-14T15:30:00.000Z"
+  },
+  {
+    "id": "txn_010",
+    "description": "REG Electricity Token",
+    "amount": 5000,
+    "category": "others",
+    "date": "2026-06-18",
+    "createdAt": "2026-06-18T18:22:00.000Z",
+    "updatedAt": "2026-06-18T18:22:00.000Z"
+  }
+]
