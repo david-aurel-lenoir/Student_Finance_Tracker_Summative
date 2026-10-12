@@ -130,4 +130,35 @@ function updateRecords() {
     });
   });
 }
+function updateCategories() {
+  let list = get("cats");
+  if (!list) return;
+  let categories = [...new Set(transactions.map((item) => item.category))].sort();
+  list.replaceChildren();
+  categories.forEach((category) => {
+    let option = document.createElement("option"); option.value = category; list.append(option);
+  });
+}
+function updatePage() { updateDashboard(); updateRecords(); updateCategories(); }
+function checkForm(form) {
+  let values = {
+    description: form.elements.description.value.trim(), amount: form.elements.amount.value.trim(),
+    category: form.elements.category.value.trim(), date: form.elements.date.value
+  };
+  let rules = {
+    description: [values.description !== "" && /^[A-Za-z0-9\s.,!?'"-]+$/.test(values.description), "Enter a valid description."],
+    amount: [/^\d+(\.\d{1,2})?$/.test(values.amount) && Number(values.amount) > 0, "Enter an amount above zero (up to 2 decimals)."],
+    category: [/^[A-Za-z\s]+$/.test(values.category), "Use letters and spaces for the category."],
+    date: [validTransaction({ ...values, id: "check" }), "Choose a valid date."]
+  };
+  let isValid = true;
+  Object.keys(rules).forEach((field) => {
+    let errorBox = get(field + "-error");
+    if (errorBox) errorBox.textContent = rules[field][0] ? "" : rules[field][1];
+    if (!rules[field][0]) isValid = false;
+  });
+  if (!isValid) return null;
+  values.amount = Number(values.amount);
+  return values;
+}
 
