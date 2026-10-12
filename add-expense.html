@@ -24,6 +24,7 @@
             <h2 id="form-h">Add Transaction</h2>
             <p role="status" aria-live="polite"></p>
             <form id="tx-form" novalidate>
+                <input id="transaction-id" type="hidden">
                 <label for="description">Description</label>
                 <input id="description" type="text" name="description" required>
                 <span class="error" id="description-error" role="alert"></span>
@@ -49,5 +50,6 @@
             </form>
         </section>
     </main>
+    <script src="scripts/main.js"></script>
 </body>
 </html>
