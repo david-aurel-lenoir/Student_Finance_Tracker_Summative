@@ -212,4 +212,37 @@ async function importTransactions(event) {
   }
   input.value = "";
 }
-
+function setupSettings() {
+  let currency = get("display-currency");
+  if (!currency) return;
+  currency.value = settings.currency || "RWF";
+  get("rate-usd").value = settings.usdRate || ""; get("rate-eur").value = settings.eurRate || "";
+  get("cap").value = settings.spendingCap || 0;
+  get("save-settings").addEventListener("click", () => {
+    let nextSettings = {
+      currency: currency.value, usdRate: get("rate-usd").value,
+      eurRate: get("rate-eur").value, spendingCap: Number(get("cap").value)
+    };
+    let rate = nextSettings.currency === "USD" ? Number(nextSettings.usdRate)
+      : nextSettings.currency === "EUR" ? Number(nextSettings.eurRate) : 1;
+    if (!Number.isFinite(nextSettings.spendingCap) || nextSettings.spendingCap < 0 ||
+        (nextSettings.currency !== "RWF" && rate <= 0)) {
+      showStatus("Enter a non-negative cap and a positive rate for the selected currency.", true); return;
+    }
+    if (saveData(keys.settings, nextSettings)) {
+      settings = nextSettings; showStatus("Settings saved."); updatePage();
+    }
+  });
+  get("export-btn").addEventListener("click", exportTransactions);
+  get("load-sample-btn").addEventListener("click", () => {
+    if (!confirm("Replace your transactions with sample data?")) return;
+    let now = new Date().toISOString();
+    let sampleTransactions = sampleRows.map((item, index) => ({
+      ...item, id: `sample_${index + 1}`, createdAt: now, updatedAt: now
+    }));
+    if (saveData(keys.transactions, sampleTransactions)) {
+      transactions = sampleTransactions; showStatus("Sample transactions loaded."); updatePage();
+    }
+  });
+  get("import-file").addEventListener("change", importTransactions);
+}
