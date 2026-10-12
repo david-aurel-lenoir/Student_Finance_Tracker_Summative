@@ -32,5 +32,6 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    border-bottom: 1px solid var(--border);
 }
 
