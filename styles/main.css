@@ -21,6 +21,7 @@ body {
     color: var(--primary-color);
     margin: 1;
     padding: 1;
+    line-height: 1.5;
 }
 
 header {
@@ -28,5 +29,8 @@ header {
     color: var(--surface);
     padding: 1rem;
     font-size: 16px;
-    line-height: 1.5;
-}r
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
