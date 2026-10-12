@@ -39,3 +39,15 @@ function showStatus(message, isError = false) {
   let box = get("settings-status") || get("form-status") || get("search-status");
   if (box) { box.textContent = message; box.classList.toggle("error", isError); }
 }
+function getRate(currency) {
+  if (currency === "USD") return Number(settings.usdRate);
+  if (currency === "EUR") return Number(settings.eurRate);
+  return 1;
+}
+function formatMoney(amount) {
+  let currency = settings.currency || "RWF", rate = getRate(currency);
+  if (currency !== "RWF" && rate > 0) {
+    return new Intl.NumberFormat(undefined, { style: "currency", currency }).format(Number(amount) / rate);
+  }
+  return new Intl.NumberFormat().format(Number(amount)) + " RWF";
+}
