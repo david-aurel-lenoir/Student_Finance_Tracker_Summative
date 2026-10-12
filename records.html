@@ -1,0 +1,39 @@
+<section id="records" class="section">
+            <h2>Records</h2>
+
+            <div class="records-controls">
+                <div class="form-group search-group">
+                    <label for="search-input">Search records</label>
+                    <input type="search" id="search-input" placeholder="e.g. coffee">
+                    <span id="search-status" role="status" aria-live="polite"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="sort-select">Sort by</label>
+                    <select id="sort-select">
+                        <option value="date-asc">Date</option>
+                        <option value="description-asc">Description</option>
+                        <option value="amount-asc">Amount</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table id="records-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Description</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="records-tbody">
+                        <tr>
+                            <td colspan="5" class="empty-state">No transactions yet. Add one to get started!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
