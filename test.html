@@ -8,7 +8,27 @@
 <body>
     <h1>Regex Validation Tests</h1>
     <script>
-        
+        function assert(description, result) {
+            const testResult = document.createElement('p');
+            testResult.textContent = `${description}: ${result ? 'Passed' : 'Failed'}`;
+            testResult.style.color = result ? 'green' : 'red';
+            document.body.appendChild(testResult);
+        }
+
+        const descPat = /^[A-Za-z0-9\s.,!?'"-]+$/;
+        const amountPat = /^\d+(\.\d{1,2})?$/;
+        const datePat = /^\d{4}-\d{2}-\d{2}$/;
+        const categoryPat = /^[A-Za-z\s]+$/;
+        const dupPat = /^\d+(\.\d{1,2})?$/;
+
+        assert('Description Validation', descPat.test('Lunch at cafe'));
+        assert("Description: leading space fails", !descPat.test(" Lunch"));
+        assert('Amount Validation', amountPat.test('12.50'));
+        assert('Date Validation', datePat.test('2026-10-15'));
+        assert('Category Validation', categoryPat.test('Food'));
+        assert("Category: numbers fail", !categoryPat.test("Food123"));
+        assert("Duplicate word: caught", dupPat.test("coffee coffee"));
+        assert("Duplicate word: clean text passes", !dupPat.test("Lunch at cafeteria"));
     </script>
 </body>
 </html>
