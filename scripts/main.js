@@ -91,3 +91,43 @@ function updateDashboard() {
     showStatus(`Add a valid ${settings.currency} exchange rate in Settings.`, true);
   }
 }
+function editTransaction(id) {
+  try { sessionStorage.setItem(keys.editing, id); location.href = "add-expense.html"; }
+  catch (error) { console.error("Could not start editing:", error); showStatus("Unable to start editing.", true); }
+}
+function deleteTransaction(id) {
+  let item = transactions.find((transaction) => transaction.id === id);
+  if (!item || !confirm(`Delete "${item.description}"?`)) return;
+  let next = transactions.filter((transaction) => transaction.id !== id);
+  if (saveData(keys.transactions, next)) { transactions = next; updatePage(); }
+}
+function updateRecords() {
+  let body = get("records-tbody");
+  if (!body) return;
+  let search = get("search-input"), sort = get("sort-select");
+  let searchText = search ? search.value.trim().toLowerCase() : "";
+  let sortBy = sort ? sort.value : "date-asc";
+  let rows = transactions.filter((item) =>
+    `${item.description} ${item.category} ${item.date}`.toLowerCase().includes(searchText));
+  rows.sort((a, b) => sortBy === "description-asc" ? a.description.localeCompare(b.description)
+    : sortBy === "amount-asc" ? Number(a.amount) - Number(b.amount) : a.date.localeCompare(b.date));
+  body.replaceChildren();
+  if (!rows.length) {
+    let cell = body.insertRow().insertCell();
+    cell.colSpan = 5; cell.className = "empty-state";
+    cell.textContent = searchText ? "No matching transactions." : "No transactions yet. Add one to get started!";
+    return;
+  }
+  rows.forEach((item) => {
+    let row = body.insertRow();
+    [item.description, formatMoney(item.amount), item.category, item.date]
+      .forEach((value) => row.insertCell().textContent = value);
+    let actions = row.insertCell();
+    [["Edit", () => editTransaction(item.id)], ["Delete", () => deleteTransaction(item.id)]].forEach(([name, action]) => {
+      let button = document.createElement("button");
+      button.type = "button"; button.className = "secondary"; button.textContent = name;
+      button.addEventListener("click", action); actions.append(button, document.createTextNode(" "));
+    });
+  });
+}
+
