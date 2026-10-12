@@ -161,4 +161,36 @@ function checkForm(form) {
   values.amount = Number(values.amount);
   return values;
 }
+function setupExpenseForm() {
+  let form = get("tx-form");
+  if (!form) return;
+  let idInput = get("transaction-id"), editingId = sessionStorage.getItem(keys.editing);
+  let existing = transactions.find((item) => item.id === editingId);
+  if (existing) {
+    ["description", "amount", "category", "date"].forEach((field) => { form.elements[field].value = existing[field]; });
+    idInput.value = existing.id; get("form-h").textContent = "Edit Transaction";
+  } else if (editingId) sessionStorage.removeItem(keys.editing);
 
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    let values = checkForm(form);
+    if (!values) return;
+    let old = transactions.find((item) => item.id === idInput.value);
+    let now = new Date().toISOString(), next;
+    if (old) {
+      next = transactions.map((item) => item.id === old.id ? { ...item, ...values, updatedAt: now } : item);
+    } else {
+      values.id = globalThis.crypto?.randomUUID?.() || `txn_${Date.now()}`;
+      values.createdAt = now; values.updatedAt = now;
+      next = [...transactions, values];
+    }
+    if (!saveData(keys.transactions, next)) return;
+    transactions = next; sessionStorage.removeItem(keys.editing);
+    showStatus(old ? "Transaction updated." : "Transaction saved.");
+    form.reset(); idInput.value = ""; updatePage();
+  });
+  let cancel = get("cancel-btn");
+  if (cancel) cancel.addEventListener("click", () => {
+    sessionStorage.removeItem(keys.editing); location.href = "index.html";
+  });
+}
