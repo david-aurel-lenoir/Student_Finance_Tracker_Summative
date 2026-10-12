@@ -21,3 +21,17 @@ body {
   color: var(--text);
   line-height: 1.6;
 }
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+}
+
+.skip-link:focus {
+  left: 20px;
+  top: 20px;
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  z-index: 100;
+}
