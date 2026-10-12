@@ -246,3 +246,10 @@ function setupSettings() {
   });
   get("import-file").addEventListener("change", importTransactions);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  updatePage(); setupExpenseForm(); setupSettings();
+  if (get("search-input")) get("search-input").addEventListener("input", updateRecords);
+  if (get("sort-select")) get("sort-select").addEventListener("change", updateRecords);
+});
+
