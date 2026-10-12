@@ -194,3 +194,22 @@ function setupExpenseForm() {
     sessionStorage.removeItem(keys.editing); location.href = "index.html";
   });
 }
+function exportTransactions() {
+  let file = new Blob([JSON.stringify(transactions, null, 2)], { type: "application/json" });
+  let url = URL.createObjectURL(file), link = document.createElement("a");
+  link.href = url; link.download = "student-finance-transactions.json"; link.click(); URL.revokeObjectURL(url);
+  showStatus("Transactions exported.");
+}
+async function importTransactions(event) {
+  let input = event.currentTarget;
+  if (!input.files || !input.files[0]) return;
+  try {
+    let imported = JSON.parse(await input.files[0].text());
+    if (!Array.isArray(imported) || !imported.every(validTransaction)) throw new Error("Choose a JSON array of valid transactions.");
+    if (saveData(keys.transactions, imported)) { transactions = imported; showStatus("Transactions imported."); updatePage(); }
+  } catch (error) {
+    console.error("Could not import the selected file:", error); showStatus(`Import failed: ${error.message}`, true);
+  }
+  input.value = "";
+}
+
