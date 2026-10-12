@@ -215,3 +215,32 @@ button:hover,
   background: #e5e7eb;
   color: var(--text);
 }
+.secondary:hover {
+  background: #d1d5db;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.error {
+  display: block;
+  min-height: 18px;
+  color: var(--danger);
+  font-size: 0.88rem;
+  margin-top: 4px;
+}
+
+.status {
+  color: var(--success);
+  margin-top: 14px;
+  font-weight: 600;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 18px;
+}
