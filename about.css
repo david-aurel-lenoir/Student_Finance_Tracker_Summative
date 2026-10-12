@@ -1,0 +1,37 @@
+body {
+  margin: 0;
+  font-family: "Comic Sans MS", "Trebuchet MS", sans-serif;
+  background: linear-gradient(135deg, #ffe082, #ffcc80, #f8bbd0);
+  color: #2d1b12;
+}
+
+.about-page {
+  max-width: 760px;
+  margin: 40px auto;
+  padding: 24px;
+}
+
+.section {
+  background: #fff8e1;
+  border: 4px dashed #ff7043;
+  border-radius: 18px;
+  box-shadow: 6px 6px 0 #7e57c2;
+  padding: 24px;
+}
+
+h2 {
+  color: #5e35b1;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+p, a {
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+a {
+  color: #d84315;
+  font-weight: bold;
+  text-decoration: underline wavy;
+}

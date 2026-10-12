@@ -1,0 +1,78 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  margin: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+}
+.skip-link:focus {
+  left: 10px;
+  top: 10px;
+  background: white;
+}
+
+header {
+  background: #1e3a8a;
+  color: white;
+  padding: 15px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 15px;
+}
+nav a {
+  color: white;
+}
+
+main {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 15px;
+}
+
+.section {
+  display: none;
+  background: white;
+  padding: 20px;
+}
+.section.active {
+  display: block;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+input, select {
+  width: 100%;
+  padding: 7px;
+}
+
+button, .button {
+  background: #6a6c70;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+.secondary {
+  background: #bbb;
+  color: black;
+}
+
+.error {
+  color: rgb(87, 84, 84);
+}
+.status {
+  color: rgb(159, 163, 159);
+}
+
+:focus-visible {
+  outline: 3px solid rgb(134, 133, 129);
+}
