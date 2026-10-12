@@ -13,3 +13,12 @@
     --border: 1px solid #ccc;
     --surface: #ffffff;
 }
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    background-color: var(--bg);
+    color: var(--primary-color);
+    margin: 0;
+    padding: 0;
+}
