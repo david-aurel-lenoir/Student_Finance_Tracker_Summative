@@ -6,4 +6,20 @@ const sampleRows = [
 ];
 const get = (id) => document.getElementById(id);
 
-function readData(key, backup) {}
+function readData(key, backup) {
+  try {
+    let saved = localStorage.getItem(key);
+    return saved === null ? backup : JSON.parse(saved);
+  } catch (error) {
+    console.error("Could not read saved data:", error);
+    return backup;
+  }
+}
+function validTransaction(item) {
+  if (!item || typeof item !== "object" || typeof item.date !== "string") return false;
+  let date = new Date(item.date + "T00:00:00Z");
+  return typeof item.id === "string" && typeof item.description === "string" &&
+    Number.isFinite(Number(item.amount)) && Number(item.amount) > 0 &&
+    typeof item.category === "string" && /^\d{4}-\d{2}-\d{2}$/.test(item.date) &&
+    !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === item.date;
+}
