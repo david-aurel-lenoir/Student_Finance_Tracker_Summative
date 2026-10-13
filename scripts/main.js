@@ -68,25 +68,6 @@ function updateDashboard() {
   if (get("budget-progress")) get("budget-progress").style.width =
     cap ? `${Math.min(total / cap * 100, 100)}%` : "0%";
 
-  let chart = get("chart-bars");
-  if (!chart) return;
-  chart.replaceChildren();
-  let days = [];
-  for (let i = 6; i >= 0; i--) {
-    let date = new Date();
-    date.setDate(date.getDate() - i);
-    days.push(`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`);
-  }
-  let amounts = days.map((day) => transactions
-    .filter((item) => item.date === day)
-    .reduce((sum, item) => sum + Number(item.amount), 0));
-  let biggestDay = Math.max(...amounts, 1);
-  amounts.forEach((amount, i) => {
-    let bar = document.createElement("div");
-    bar.className = "chart-bar"; bar.style.height = `${Math.max(amount / biggestDay * 100, 4)}%`;
-    bar.title = `${days[i]}: ${formatMoney(amount)}`;
-    bar.setAttribute("aria-label", bar.title); chart.append(bar);
-  });
   if (settings.currency !== "RWF" && getRate(settings.currency) <= 0) {
     showStatus(`Add a valid ${settings.currency} exchange rate in Settings.`, true);
   }

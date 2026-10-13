@@ -129,7 +129,6 @@ h2 {
 }
 
 .budget-indicator,
-.chart-container,
 .records-controls,
 .form-group {
   margin-top: 24px;
@@ -149,21 +148,6 @@ h2 {
   background: linear-gradient(90deg, #22c55e, #84cc16);
   border-radius: inherit;
   transition: width 0.3s ease;
-}
-
-.chart {
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-  height: 180px;
-  padding-top: 12px;
-}
-
-.chart-bar {
-  flex: 1;
-  min-height: 30px;
-  border-radius: 10px 10px 0 0;
-  background: linear-gradient(180deg, #60a5fa, #1d4ed8);
 }
 
 label {
