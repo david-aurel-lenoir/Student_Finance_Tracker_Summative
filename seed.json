@@ -1,28 +1,28 @@
 [
   {
-    "id": "txn_001",
-    "description": "Lunch at cafeteria",
-    "amount": 3500,
-    "category": "food",
-    "date": "2026-10-19",
-    "createdAt": "2026-10-19T08:00:00.000Z",
-    "updatedAt": "2026-10-19T08:00:00.000Z"
+   "id": "txn_001",
+   "description": "Lunch at cafetaria",
+   "amount": 3500,
+   "category": "food",
+   "date": "2026-10-19",
+   "createdAT": "2026-10-19T08:00:00.000z",
+   "updatedAT": "2026-10-19T08:00:00:000z"
   },
   {
     "id": "txn_002",
-    "description": "Chemistry textbook",
+    "description": "Chmistry textbook",
     "amount": 45000,
     "category": "fees",
     "date": "2026-10-18",
-    "createdAt": "2026-10-18T09:00:00.000Z",
-    "updatedAt": "2026-10-18T09:00:00.000Z"
+    "createdAT": "2026-10-18T09:00:00.000Z",
+    "updatedAT": "2026-10-19T08:00:00:000Z"  
   },
   {
     "id": "txn_003",
     "description": "ride to Kigali Heights",
     "amount": 1500,
     "category": "transports",
-    "date": "2026-10-19",
+    "date": "2026-10-19",    
     "createdAt": "2026-10-19T06:30:00.000Z",
     "updatedAt": "2026-10-19T06:30:00.000Z"
   },
