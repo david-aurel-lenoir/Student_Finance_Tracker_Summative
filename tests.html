@@ -18,16 +18,18 @@
             document.body.appendChild(testResult);
         }
 
-        const descPat = /^[A-Za-z0-9\s.,!?'"-]+$/;
+        const descPat = /^[A-Za-z0-9.,!?'"-](?:[A-Za-z0-9\s.,!?'"-]*[A-Za-z0-9.,!?'"-])?$/;
         const amountPat = /^\d+(\.\d{1,2})?$/;
-        const datePat = /^\d{4}-\d{2}-\d{2}$/;
-        const categoryPat = /^[A-Za-z\s]+$/;
-        const dupPat= /^\d+(\.\d{1,2})?$/;
+        const datePat = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+        const categoryPat = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
+        const dupPat= /\b(\w+)\s+\1\b/i;
 
         assert('Description Validation', descPat.test('Lunch at Cafe'));
         assert("Description: leading space fails", !descPat.test(" Lunch"));
         assert('Amount Validation', amountPat.test('12.50'));
+        assert("Amount 3 decimals fails", !amountPat.test('12.555'));
         assert('Date Validation', datePat.test('2026-10-15'));
+        assert('Date: month 13 fails', !datePat.test('2026-13-40'));
         assert('Category Validation', categoryPat.test('Food'));
         assert('Category: numbers fail', !categoryPat.test('Food123'));
         assert("Duplicate word: caught", dupPat.test("coffee coffee"));
