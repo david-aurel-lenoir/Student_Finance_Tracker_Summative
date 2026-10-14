@@ -24,7 +24,7 @@
 
         assert('Description Validation', Validators.description.test('Lunch at Cafe'));
         assert("Description: leading space fails", !Validators.description.test(" Lunch"));
-        assert("Description: trailing space fails", !Validators.description.test("Lunch"));
+        assert("Description: trailing space fails", !Validators.description.test("Lunch "));
         assert('Amount Validation', Validators.amount.test('12.50'));
         assert("Amount 3 decimals fails", !Validators.amount.test('12.555'));
         assert('Date Validation', Validators.date.test('2026-10-15'));
