@@ -20,7 +20,7 @@ function validTransaction(item) {
   let date = new Date(item.date + "T00:00:00Z");
   return typeof item.id === "string" && typeof item.description === "string" &&
     Number.isFinite(Number(item.amount)) && Number(item.amount) > 0 &&
-    typeof item.category === "string" && /^\d{4}-\d{2}-\d{2}$/.test(item.date) &&
+    typeof item.category === "string" && Validator.date.test(item.date) &&
     !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === item.date;
 }
 let stored = readData(keys.transactions, []);
@@ -127,9 +127,9 @@ function checkForm(form) {
     category: form.elements.category.value.trim(), date: form.elements.date.value
   };
   let rules = {
-    description: [values.description !== "" && /^[A-Za-z0-9\s.,!?'"-]+$/.test(values.description), "Enter a valid description."],
-    amount: [/^\d+(\.\d{1,2})?$/.test(values.amount) && Number(values.amount) > 0, "Enter an amount above zero (up to 2 decimals)."],
-    category: [/^[A-Za-z\s]+$/.test(values.category), "Use letters and spaces for the category."],
+    description: [Validator.description.test(values.description) && !Validators.duplicateWord.test(values.description), "Enter a valid description."],
+    amount: [Validator.amount.test(values.amount) && Number(values.amount) > 0, "Enter an amount above zero (up to 2 decimals)."],
+    category: [Validator.category.test(values.category), "Use letters and spaces for the category."],
     date: [validTransaction({ ...values, id: "check" }), "Choose a valid date."]
   };
   let isValid = true;

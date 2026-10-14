@@ -5,37 +5,34 @@
     <meta name="viewport" content="width=device-width, initila-scale=1.0">
     <title>Test for Regex</title>
     <link rel="stylesheet" href="styles/main.css">
+    <script src="scripts/validator.js"></script>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Go to main content</a>
     <header>      
         <h1>Test for Regex Validation</h1>
     </header>
-    <main id="main-content" tabinex="-1">
+    <main id="main-content" tabindex="-1">
+    <div id="results"></div>
     <script>
         function assert(description, result) {
             const testResult = document.createElement('p');
             testResult.textContent = `${description}: ${result ? 'Passed' : 'Failed'}`;
             testResult.style.color = result ? 'green' : 'red';
-            document.body.appendChild(testResult);
+            document.getElementById('results').appendChild(testResult);
         }
 
-        const descPat = /^[A-Za-z0-9.,!?'"-](?:[A-Za-z0-9\s.,!?'"-]*[A-Za-z0-9.,!?'"-])?$/;
-        const amountPat = /^\d+(\.\d{1,2})?$/;
-        const datePat = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
-        const categoryPat = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
-        const dupPat= /\b(\w+)\s+\1\b/i;
-
-        assert('Description Validation', descPat.test('Lunch at Cafe'));
-        assert("Description: leading space fails", !descPat.test(" Lunch"));
-        assert('Amount Validation', amountPat.test('12.50'));
-        assert("Amount 3 decimals fails", !amountPat.test('12.555'));
-        assert('Date Validation', datePat.test('2026-10-15'));
-        assert('Date: month 13 fails', !datePat.test('2026-13-40'));
-        assert('Category Validation', categoryPat.test('Food'));
-        assert('Category: numbers fail', !categoryPat.test('Food123'));
-        assert("Duplicate word: caught", dupPat.test("coffee coffee"));
-        assert("Duplicate word: clean text passes", !dupPat.test("Lunch at cafetaria"));
+        assert('Description Validation', Validators.description.test('Lunch at Cafe'));
+        assert("Description: leading space fails", !Validators.description.test(" Lunch"));
+        assert("Description: trailing space fails", !Validators.description.test("Lunch"));
+        assert('Amount Validation', Validators.amount.test('12.50'));
+        assert("Amount 3 decimals fails", !Validators.amount.test('12.555'));
+        assert('Date Validation', Validators.date.test('2026-10-15'));
+        assert('Date: month 13 fails', !Validators.date.test('2026-13-40'));
+        assert('Category Validation', Validators.category.test('Food'));
+        assert('Category: numbers fail', !Validators.category.test('Food123'));
+        assert("Duplicate word: caught", Validators.duplicateWord.test("coffee coffee"));
+        assert("Duplicate word: clean text passes", !Validators.duplicateWord.test("Lunch at cafetaria"));
     </script>
     </main>
     <footer>

@@ -1,5 +1,7 @@
-export        const descPat = /^[A-Za-z0-9\s.,!?'"-]+$/;
-export        const amountPat = /^\d+(\.\d{1,2})?$/;
-export        const datePat = /^\d{4}-\d{2}-\d{2}$/;
-export        const categoryPat = /^[A-Za-z\s]+$/;
-export        const dupPat = /^\d+(\.\d{1,2})?$/;
+const Validator = {
+    description: /^[A-Za-z0-9.,!?'"-](?:[A-Za-z0-9\s.,!?'"-]*[A-Za-z0-9.,!?'"-])?$/,
+    amount: /^\d+(\.\d{1,2})?$/,
+    date: /^\d{4}-(0[1-9]|[0-2])-(0[1-9]|[12]\d|3[01])$/,
+    category: /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/,
+    duplicateWord: /\b(\w+)\s+\1\b/i
+};
