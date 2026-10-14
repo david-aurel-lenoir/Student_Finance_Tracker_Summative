@@ -82,17 +82,58 @@ function deleteTransaction(id) {
   let next = transactions.filter((transaction) => transaction.id !== id);
   if (saveData(keys.transactions, next)) { transactions = next; updatePage(); }
 }
+function compileRegex(input) {
+  if (!input) return null;
+  if (input.length > 100) return {error: "max 100 characters"};
+  if (/\([^))]*[+*][^)]*\)[+*{]/.test(input)) return { error: "Too complex" };
+  try{
+    return { re: new RegExp(input, "i"), reG: new RegExp(input, "gi") };
+  } catch (error) {
+    return { error: "Invalid pattern: + error.message"};
+  }
+}
+
+function highlightInto(cell, text, regex) {
+  if (!regex) { cell.textContent = text; return; }
+  let last = 0;
+  for (const match of String(text).matchAll(regex)) {
+    if (match[0] === "") continue;
+    cell.append(document.createTextNode(text.slice(last, match.index)));
+    let mark = document.createElement("mark");
+    mark.textContent = match[0];
+    cell.append(mark);
+    last = match.index + match[0].length;
+  }
+  cell.append(document.createTextNode(text.slice(last)));
+}
+
+function sortRecords(records, sortValue) {
+  let [field, dir] = sortValue.split("-");
+  let factor = dir === "desc" ? -1 : 1;
+  return [...records].sort((a,b) => {
+    if (field === "amount") return (Number(a.amount) - Number(b.amount)) * factor;
+    if (field === "date") return a.date.localeCompare(b.date) * factor;
+    return a.description.localeCompare(b.description) * factor;
+  });
+}
 function updateRecords() {
   let body = get("records-tbody");
   if (!body) return;
   let search = get("search-input"), sort = get("sort-select");
-  let searchText = search ? search.value.trim().toLowerCase() : "";
+  let searchText = search ? search.value.trim() : "";
+  let status = get("search-status");
+  let matcher = compileRegex(searchText);
+  if (matcher && matcher.error) {
+    if (status) { status.textContent = matcher.error; status.classList.add("error"); }
+    matcher = null;
+  } else if (status) status.classList.remove("error");
   let sortBy = sort ? sort.value : "date-asc";
   let rows = transactions.filter((item) =>
-    `${item.description} ${item.category} ${item.date}`.toLowerCase().includes(searchText));
-  rows.sort((a, b) => sortBy === "description-asc" ? a.description.localeCompare(b.description)
-    : sortBy === "amount-asc" ? Number(a.amount) - Number(b.amount) : a.date.localeCompare(b.date));
+    !matcher || matcher.re.test(`${item.description} ${item.category} ${item.date}`));
+  rows = sortRecords(rows, sortBy);
   body.replaceChildren();
+  if (status && matcher) status.textContent = `${rows.length} match${rows.length === 1 ? "" : "es"} found.`;
+  else if (status && !searchText) status.textContent = "";
   if (!rows.length) {
     let cell = body.insertRow().insertCell();
     cell.colSpan = 5; cell.className = "empty-state";
@@ -101,8 +142,11 @@ function updateRecords() {
   }
   rows.forEach((item) => {
     let row = body.insertRow();
-    [item.description, formatMoney(item.amount), item.category, item.date]
-      .forEach((value) => row.insertCell().textContent = value);
+    [item.description, formatMoney(item.amount), item.category, item.date].forEach((value, i) => {
+      let cell = row.insertCell();
+      if (i === 1) cell.textContent = value;
+      else highlightInto(cell, value, matcher && matcher.reG);
+    });
     let actions = row.insertCell();
     [["Edit", () => editTransaction(item.id)], ["Delete", () => deleteTransaction(item.id)]].forEach(([name, action]) => {
       let button = document.createElement("button");

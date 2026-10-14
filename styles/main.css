@@ -252,6 +252,12 @@ th {
   letter-spacing: 0.04em;
 }
 
+mark {
+  background:var(--primary);
+  color: #000;
+  padding: 0 2px;
+}
+
 #import-file {
   display: none;
 }
