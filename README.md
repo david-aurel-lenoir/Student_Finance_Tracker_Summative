@@ -12,7 +12,7 @@ Built for the ALU summative assignment
 
 ## Demo Video
 
-🎥 https://youtu.be/7BnTW454cXs
+🎥 https://youtu.be/45Yv2blx8DI
 
 ## Repository
 
