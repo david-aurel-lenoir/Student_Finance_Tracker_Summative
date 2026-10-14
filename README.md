@@ -8,7 +8,7 @@ Built for the ALU summative assignment
 
 ## Live Demo
 
-🌐 https://david-aurel-lenoir.github.io/Student_Finance_Tracker_Summative
+🌐 https://david-aurel-lenoir.github.io/Student_Finance_Tracker_Summative/
 
 ## Demo Video
 
