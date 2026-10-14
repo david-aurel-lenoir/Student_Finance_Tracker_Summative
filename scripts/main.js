@@ -24,7 +24,7 @@ function validTransaction(item) {
     !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === item.date;
 }
 let stored = readData(keys.transactions, []);
-let transactions = Array.isArray(stored) && stored.every(validTransaction) ? stored : [];
+let transactions = Array.isArray(stored) ? stored.filter(validTransaction) : [];
 let settings = readData(keys.settings, { ...defaults });
 if (!settings || typeof settings !== "object" || Array.isArray(settings)) settings = { ...defaults };
 function saveData(key, value) {
@@ -225,12 +225,33 @@ function exportTransactions() {
   link.href = url; link.download = "student-finance-transactions.json"; link.click(); URL.revokeObjectURL(url);
   showStatus("Transactions exported.");
 }
+function checkImport(data) {
+  if (!Array.isArray(data)) return "file must contain a json array";
+  if (data.lenght > 5000) return "too many records max is 5000";
+  let ids = new Set();
+  for (let i = 0; i < data.length; i++) {
+    let item = data[i], n = i + 1;
+    if (!validTransaction(item)) return `Record ${n} has a missing or invalid filed`;
+    if (!Validators.description.test(item.description)) return `Record ${n}: invalid description`;
+    if (!Validators.category.test(item.category)) return `Record ${n}: invalid category`;
+    if (ids.has(item.id)) return `Record ${n}: duplicate id`;
+    ids.add(item.id);
+  }
+  return "";
+}
 async function importTransactions(event) {
   let input = event.currentTarget;
   if (!input.files || !input.files[0]) return;
+  let file = input.files[0];
   try {
-    let imported = JSON.parse(await input.files[0].text());
-    if (!Array.isArray(imported) || !imported.every(validTransaction)) throw new Error("Choose a JSON array of valid transactions.");
+    if (!file.name.toLowerCase().endsWith(".json")) throw new Error("Choose a .json file");
+    if (file.size > 1000000) throw new Error("file is too large mx is 1 MB");
+    let imported = JSON.parse(await file.text());
+    let problem = checkImport(imported);
+    if (problem) throw new Error(problem);
+    if (!confirm(`Replace your ${transaction.length} transaction with ${imported.length} imported records?`)){
+      input.value = ""; return;
+    }
     if (saveData(keys.transactions, imported)) { transactions = imported; showStatus("Transactions imported."); updatePage(); }
   } catch (error) {
     console.error("Could not import the selected file:", error); showStatus(`Import failed: ${error.message}`, true);
@@ -262,8 +283,8 @@ function setupSettings() {
   get("load-sample-btn").addEventListener("click", () => {
     if (!confirm("Replace your transactions with sample data?")) return;
     let now = new Date().toISOString();
-    let sampleTransactions = sampleRows.map((item, index) => ({
-      ...item, id: `sample_${index + 1}`, createdAt: now, updatedAt: now
+    let sampleTransactions = sampleRows.map(([description, amount, category, date], index) => ({
+      id: `sample_${index + 1}`, description, amount, category, date,createdAt: now, updatedAT: now
     }));
     if (saveData(keys.transactions, sampleTransactions)) {
       transactions = sampleTransactions; showStatus("Sample transactions loaded."); updatePage();
