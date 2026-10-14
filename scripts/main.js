@@ -89,7 +89,7 @@ function compileRegex(input) {
   try{
     return { re: new RegExp(input, "i"), reG: new RegExp(input, "gi") };
   } catch (error) {
-    return { error: "Invalid pattern: + error.message"};
+    return { error: "Invalid pattern"};
   }
 }
 
