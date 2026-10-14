@@ -227,7 +227,7 @@ function exportTransactions() {
 }
 function checkImport(data) {
   if (!Array.isArray(data)) return "file must contain a json array";
-  if (data.lenght > 5000) return "too many records max is 5000";
+  if (data.length > 5000) return "too many records max is 5000";
   let ids = new Set();
   for (let i = 0; i < data.length; i++) {
     let item = data[i], n = i + 1;
@@ -249,7 +249,7 @@ async function importTransactions(event) {
     let imported = JSON.parse(await file.text());
     let problem = checkImport(imported);
     if (problem) throw new Error(problem);
-    if (!confirm(`Replace your ${transaction.length} transaction with ${imported.length} imported records?`)){
+    if (!confirm(`Replace your ${transactions.length} transaction with ${imported.length} imported records?`)){
       input.value = ""; return;
     }
     if (saveData(keys.transactions, imported)) { transactions = imported; showStatus("Transactions imported."); updatePage(); }

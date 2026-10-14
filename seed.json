@@ -55,7 +55,7 @@
   },
   {
     "id": "txn_007",
-    "description": "Coffee ",
+    "description": "Coffee",
     "amount": 3000,
     "category": "food",
     "date": "2026-10-19",
