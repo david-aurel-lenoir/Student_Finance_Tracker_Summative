@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Go to main content</a>
     <header>      
         <h1>Test for Regex Validation</h1>
     </header>
+    <main id="main-content" tabinex="-1">
     <script>
         function assert(description, result) {
             const testResult = document.createElement('p');
@@ -35,5 +37,9 @@
         assert("Duplicate word: caught", dupPat.test("coffee coffee"));
         assert("Duplicate word: clean text passes", !dupPat.test("Lunch at cafetaria"));
     </script>
+    </main>
+    <footer>
+        <p>© ALU October 2026 David Aurelien Bitwayiki</p>
+    </footer>
 </body>
 </html>
