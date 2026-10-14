@@ -127,7 +127,7 @@ function checkForm(form) {
     category: form.elements.category.value.trim(), date: form.elements.date.value
   };
   let rules = {
-    description: [Validator.description.test(values.description) && !Validators.duplicateWord.test(values.description), "Enter a valid description."],
+    description: [Validators.description.test(values.description) && !Validators.duplicateWord.test(values.description), "Enter a valid description."],
     amount: [Validators.amount.test(values.amount) && Number(values.amount) > 0, "Enter an amount above zero (up to 2 decimals)."],
     category: [Validators.category.test(values.category), "Use letters and spaces for the category."],
     date: [validTransaction({ ...values, id: "check" }), "Choose a valid date."]
